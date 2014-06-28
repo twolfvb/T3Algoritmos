@@ -2,10 +2,10 @@ package a;
 
 public class Point {
 	
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
-	public Point(int x, int y){
+	public Point(double x, double y){
 		this.x=x;
 		this.y=y;
 	}
@@ -13,4 +13,16 @@ public class Point {
 	public double dist(Point a){
 		return Math.sqrt(Math.pow(this.x - a.x, 2) + Math.pow(this.y - a.y, 2));
 	}
+	
+	public boolean equals(Object b){
+		if(b instanceof Point)
+			return this.dist((Point)b)==0;
+		else return false;
+	}
+	
+	public String toString(){
+		return "("+this.x+","+this.y+")";
+	}
+	
+	
 }
