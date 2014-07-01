@@ -9,5 +9,11 @@ public class Arista {
 		this.y=y;
 		this.peso=x.dist(y);
 	}
+	public double getPeso(){
+		return this.peso;
+	}
+	public String toString(){
+		return "Arista desde " +x.toString()+ " a " +y.toString()+" con peso " +peso;
+	}
 
 }
