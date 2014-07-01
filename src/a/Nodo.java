@@ -1,7 +1,9 @@
 package a;
 
+import java.util.ArrayList;
+
 public class Nodo {
 	private Point p;
-	private Nodo left;
-	private Nodo right;
+	private ArrayList<Nodo> hijos= new ArrayList<Nodo>();
+
 }

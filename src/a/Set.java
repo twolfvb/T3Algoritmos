@@ -80,15 +80,25 @@ public class Set {
     }
     public Graph crearGrafo(){
     	int N=this.size();
-    	double [][] aristas=new double[N][N];
+    	ArrayList<Arista> aristas= new ArrayList<Arista>();
+    
     	for(int i=0;i<N;i++){
-    		for(int j=0;j<N;j++){
-    			aristas[i][j]=this.getPoint(i).dist(this.getPoint(j));
+    		for(int j=i+1;j<N;j++){
+    			aristas.add(new Arista(this.getPoint(i),this.getPoint(j)));
+    	
     		}
     	}
     	return new Graph(this,aristas);
     }
     
+    public boolean contains(Point point) {
+    	return  this.puntos.contains(point);
+    	}
+    
+    public void Union( Set B){
+        for(int i=0;i<B.size();i++)
+        	this.add(B.getPoint(i));
+    	}
     
     public static void main(String [] args){
     	Set C= new Set();
@@ -107,11 +117,13 @@ public class Set {
         P.add(p6);
         C.puntoMasCercano(P);
         System.out.println(C);
+        System.out.print(C.contains(new Point(34,55)));
         
         Set A = new Set();
         A.parse("/home/tw/git/T3Algoritmos/src/a/dj38.tsp");
         System.out.println(A.size());
     }
+
     
     
 }
