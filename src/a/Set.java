@@ -68,8 +68,6 @@ public class Set {
     	
     }
     
-    
-
     }
     public String toString(){
     	String t="El conjunto es \n";
