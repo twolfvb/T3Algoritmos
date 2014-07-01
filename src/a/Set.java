@@ -1,18 +1,40 @@
 package a;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Set {
-	private ArrayList<Point> puntos= new ArrayList<Point>();
+	private ArrayList<Point> puntos= new ArrayList<Point>();	
 	public Set(){
-		
 	}
+	
 	public Set(Point [] a){
 		for(int i=0;i<a.length;i++)
 			puntos.add(a[i]);
 	}
+	
 	public void add(Point a){
 		puntos.add(a);
+	}
+	
+	public void parse(String loc){
+		File file = new File(loc);
+		try {
+			Scanner scanner = new Scanner(file);
+			while (!scanner.nextLine().startsWith("NODE_"))
+				;
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				String[] a = line.split(" ");
+				if (a[0].startsWith("</pre>"))
+					break;
+				System.out.println(line);
+				puntos.add(new Point(a[1],a[2]));
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
     public void remove(Point a){
@@ -43,7 +65,6 @@ public class Set {
     	    }
     		P.remove(minimo);
     		this.add(minimo);
-    		System.out.println(this);
     	
     }
     
@@ -87,9 +108,9 @@ public class Set {
         C.puntoMasCercano(P);
         System.out.println(C);
         
-    	
-    	
-    	
+        Set A = new Set();
+        A.parse("/home/tw/git/T3Algoritmos/src/a/dj38.tsp");
+        System.out.println(A.size());
     }
     
     

@@ -10,6 +10,11 @@ public class Point {
 		this.y=y;
 	}
 	
+	public Point(String x, String y){
+		this.x = Double.parseDouble(x);
+		this.y = Double.parseDouble(y);
+	}
+	
 	public double dist(Point a){
 		return Math.sqrt(Math.pow(this.x - a.x, 2) + Math.pow(this.y - a.y, 2));
 	}
