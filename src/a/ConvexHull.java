@@ -8,8 +8,9 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class ConvexHull{
-	
+
 	public ArrayList<Point> execute(ArrayList<Point> points){
+		@SuppressWarnings("unchecked")//wat
 		ArrayList<Point> xSorted = (ArrayList<Point>) points.clone();
 		Collections.sort(xSorted, new XCompare());
 
@@ -97,18 +98,18 @@ public class ConvexHull{
 			P.remove(nuevoVertice.p);
 		}
 		return C;
-		
+
 	}
-	
+
 	public Double pesoTotal(ArrayList<Point> C){
 		Double peso = C.get(C.size()-1).dist(C.get(0));
-		
+
 		for (int i = 1; i < C.size(); i++) {
 			peso += C.get(i-1).dist(C.get(i));
 		}
 		return peso;
 	}
-	
+
 	public Double Peso1(Point p, Point p1, Point p2){
 		return p.dist(p1) + p.dist(p2) - p1.dist(p2);
 	}
@@ -118,7 +119,7 @@ public class ConvexHull{
 	public Trio min1(Point p, Set C){
 		Double min = Peso1(p,C.getPoint(C.puntos.size()-1), C.getPoint(0));
 		Trio minimo = new Trio(p, C.puntos.size()-1, 0);
-		
+
 		for (int i = 1; i < C.puntos.size(); i++) {
 			Double potentialMin = Peso1(p, C.getPoint(i-1), C.getPoint(i));
 			if(min > potentialMin){
@@ -130,8 +131,8 @@ public class ConvexHull{
 	}
 	public Trio min2(ArrayList<Trio> minimos, Set C){
 		Double min = Peso2(	minimos.get(0).p, 
-							C.getPoint(minimos.get(0).a1), 
-							C.getPoint(minimos.get(0).a2));
+				C.getPoint(minimos.get(0).a1), 
+				C.getPoint(minimos.get(0).a2));
 
 		Trio minimo = minimos.get(0);
 
@@ -146,13 +147,13 @@ public class ConvexHull{
 		}
 		return minimo;
 	}
-	
+
 	public Trio min(Point p, Set C){ //NO USADO! :D
 		Double min =  Peso1(p,C.getPoint(0), C.getPoint(1));
 		Double newMin;
 		ArrayList<Trio> minimums = new ArrayList<Trio>();
 		minimums.add(new Trio(p, 0, 1));
-		
+
 		for (int i = 1; i < C.puntos.size(); i++) {
 			Double potentialMin = Peso1(p, C.getPoint(i-1), C.getPoint(i));
 			if(min > potentialMin){
@@ -173,20 +174,20 @@ public class ConvexHull{
 		else if(min == potentialMin){
 			minimums.add(new Trio(p, C.puntos.size(), 0));
 		}
-		
+
 		if (minimums.size() == 1)
 			return minimums.get(0);
 		else{
 			newMin = Peso2(	minimums.get(0).p, 
-							C.getPoint(minimums.get(0).a1), 
-							C.getPoint(minimums.get(0).a2));
-			
+					C.getPoint(minimums.get(0).a1), 
+					C.getPoint(minimums.get(0).a2));
+
 			Trio newMinimum = minimums.get(0);
-			
+
 			for (Trio trio : minimums) {
 				Double potentialNewMin = Peso2(	trio.p, 
-												C.getPoint(trio.a1),
-												C.getPoint(trio.a2));
+						C.getPoint(trio.a1),
+						C.getPoint(trio.a2));
 				if(newMin > potentialNewMin){
 					newMin = potentialNewMin;
 					newMinimum = trio;
@@ -209,9 +210,11 @@ public class ConvexHull{
 				line=path.concat(line);
 				datos.add(line);
 			}
+			scanner.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
 		try{
 		for (int i = 0; i < datos.size(); i++) {
 			PrintWriter writer = new PrintWriter("/home/tw/git/T3Algoritmos/src/a/resultados/"+nombres.get(i));
@@ -233,5 +236,4 @@ public class ConvexHull{
 			e.printStackTrace();
 		}
 	}
-	
 }
