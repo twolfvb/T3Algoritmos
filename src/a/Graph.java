@@ -17,22 +17,74 @@ public class Graph {
 	public Graph(Set set){
 		this.puntos=set;
 	}
-	public Graph generarGrafo(){
+	public Graph generarMST(){
 		ArrayList<Set> componentesConexas=new ArrayList<Set>();
 		ArrayList<Arista> xSorted = (ArrayList<Arista>) aristas.clone();
+		ArrayList<Arista>  result= new ArrayList<Arista>();
 		Collections.sort(xSorted, new XCompare());
-		for(int i=0;i<xSorted.size();i++)
-			System.out.println(xSorted.get(i));
 		for(int i=0;i<puntos.size();i++){
 			Set a=new Set();
 			a.add(puntos.getPoint(i));
-			componentesConexas.add(a);
+			componentesConexas.add(a);}
+	
+			
+			
+			for(int p=0;p<xSorted.size() || componentesConexas.size()!=1;p++){
+			Arista ab=xSorted.get(p);
+			int i=encontrarIndice(componentesConexas,ab.getFromPoint());
+			int j=encontrarIndice(componentesConexas,ab.getToPoint());
+			
+			if(i!=j){
+				if(i>j) {
+					componentesConexas.get(i).Union(componentesConexas.get(j));
+					componentesConexas.remove(j);
+					
+				}
+				else 
+					componentesConexas.get(j).Union(componentesConexas.get(i));
+				    componentesConexas.remove(i);
+				    
+			}
+			
+			
+			
+		
+			
 		}
-		return null;
+		return new Graph(this.puntos,result);
 
 
 
 	}
+	private int encontrarIndice(ArrayList<Set> componentesConexas,
+			Point fromPoint) {
+		int i=0;
+		boolean encontrado=false;
+		while(i<componentesConexas.size()){
+			if(componentesConexas.get(i).contains(fromPoint)){
+				encontrado=true;
+				break;
+			
+			}
+			i++;
+		}
+		if(encontrado) return i;
+		else return -1;
+		
+	}
+	public static Set getRecorrido(String loc){
+		Set a=new Set();
+		a.parse(loc);
+		Graph g=a.crearGrafo();
+		g=g.generarMST();
+		
+		
+	
+	}
+	public void formarRecorrido(){
+		
+	}
+
 	private class XCompare implements Comparator<Arista>
     {
             @Override
@@ -41,6 +93,13 @@ public class Graph {
                     return (new Double(o1.getPeso()).compareTo(new Double(o2.getPeso())));
             }
     }
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String [] args){
     	Set C= new Set();
     	Set P=new Set();
@@ -72,6 +131,7 @@ public class Graph {
         aristas.add(new Arista(p4,p5));
         aristas.add(new Arista(p4,p6));
         aristas.add(new Arista(p5,p6));
+        
         Graph g=new Graph(P,aristas);
         g.generarGrafo();
 
